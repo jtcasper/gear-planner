@@ -32,6 +32,8 @@ export const OpoForm: PersonalBuff = {
 
 export const OpoFury: PersonalBuff = {
     name: "Opo-Opo Fury",
+    // fake status ID until issue 613 is fixed
+    statusId: -999,
     selfOnly: true,
     effects: {
         // flat 200 potency increase
@@ -55,11 +57,23 @@ export const RaptorForm: PersonalBuff = {
         // allows execution of twin snakes and true strike I and II
     },
     appliesTo: (ability) => RAPTOR_ABILITIES.includes(ability.id),
-    beforeSnapshot: (controller: BuffController, ability) => controller.removeSelf(),
+    beforeSnapshot: (controller: BuffController, ability) => {
+        controller.removeSelf();
+        if (ability.id === TwinSnakes.id) {
+            const a =  {
+                ...ability,
+                activatesBuffs: [...ability.activatesBuffs, RaptorFury],
+            };
+            return a;
+        }
+        return ability;
+    },
 };
 
 export const RaptorFury: PersonalBuff = {
     name: "Raptor Fury",
+    // fake status ID until issue 613 is fixed
+    statusId: -998,
     selfOnly: true,
     effects: {
         // flat 200 potency increase
@@ -84,23 +98,35 @@ export const CoeurlForm: PersonalBuff = {
         // allows execution of demolish, snap punch I and II
     },
     appliesTo: (ability) => COUERL_ABILITIES.includes(ability.id),
-    beforeSnapshot: (controller: BuffController, ability) => controller.removeSelf(),
+    beforeSnapshot: (controller: BuffController, ability) => {
+        controller.removeSelf();
+        if (ability.id === Demolish.id) {
+            const a =  {
+                ...ability,
+                activatesBuffs: [...ability.activatesBuffs, CoeurlFury],
+            };
+            return a;
+        }
+        return ability;
+    },
 };
 
 
 export const CoeurlFury: PersonalBuff = {
-    name: "Couerl Fury",
+    name: "Coeurl Fury",
+    // fake status ID until issue 613 is fixed
+    statusId: -997,
     selfOnly: true,
     stacks: 2,
     effects: {
-        // flat 200 potency increase
+        // flat 150 potency increase
     },
     appliesTo: (ability) => [SnapPunch.id, PouncingCoeurl.id].includes(ability.id),
     beforeSnapshot: (controller: BuffController, ability) => {
         controller.subtractStacksSelf(1);
         return {
             ...ability,
-            potency: ability.potency + 200,
+            potency: ability.potency + 150,
         };
     },
 };
@@ -129,6 +155,18 @@ export const PerfectBalanceBuff: PersonalBuff = {
                 activatesBuffs: [...ability.activatesBuffs, OpoFury],
             };
         }
+        else if (ability.id === TwinSnakes.id) {
+            return {
+                ...ability,
+                activatesBuffs: [...ability.activatesBuffs, RaptorFury],
+            };
+        }
+        else if (ability.id === Demolish.id) {
+            return {
+                ...ability,
+                activatesBuffs: [...ability.activatesBuffs, CoeurlFury],
+            };
+        }
         return ability;
     },
 };
@@ -154,6 +192,18 @@ export const FormlessFist: PersonalBuff = {
             return {
                 ...ability,
                 activatesBuffs: [...ability.activatesBuffs, OpoFury],
+            };
+        }
+        else if (ability.id === TwinSnakes.id) {
+            return {
+                ...ability,
+                activatesBuffs: [...ability.activatesBuffs, RaptorFury],
+            };
+        }
+        else if (ability.id === Demolish.id) {
+            return {
+                ...ability,
+                activatesBuffs: [...ability.activatesBuffs, CoeurlFury],
             };
         }
         return ability;
