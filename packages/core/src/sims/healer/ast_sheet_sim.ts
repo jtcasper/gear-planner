@@ -297,6 +297,7 @@ export const astNewSheetSpec: SimSpec<AstSim, AstSettingsExternal> = {
     },
     stub: "ast-sheet-sim",
     supportedJobs: ['AST'],
+    supportedLevels: [90, 100],
     isDefaultSim: true,
 };
 

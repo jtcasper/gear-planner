@@ -144,6 +144,7 @@ export const sgeNewSheetSpec: SimSpec<SgeSheetSim, SgeNewSheetSettingsExternal> 
     },
     stub: "sge-sheet-sim-mk2",
     supportedJobs: ['SGE'],
+    supportedLevels: [70, 80, 90, 100],
     isDefaultSim: true,
     description: 'Simulates the standard SGE 2-minute rotation.',
     maintainers: [{

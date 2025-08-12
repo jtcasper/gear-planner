@@ -217,6 +217,7 @@ export const schNewSheetSpec: SimSpec<SchSim, SchSettingsExternal> = {
     },
     stub: "sch-sheet-sim",
     supportedJobs: ['SCH'],
+    supportedLevels: [70, 80, 90, 100],
     isDefaultSim: true,
 };
 
